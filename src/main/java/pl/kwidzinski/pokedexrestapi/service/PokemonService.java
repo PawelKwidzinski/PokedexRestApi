@@ -8,6 +8,7 @@ import pl.kwidzinski.pokedexrestapi.repository.PokemonRepo;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class PokemonService {
@@ -37,5 +38,18 @@ public class PokemonService {
 
     public void delete(final Long id) {
         pokemonRepo.deleteById(id);
+    }
+
+    public List<Pokemon> findByType(final String type) {
+        return pokemonRepo.findAll()
+                .stream()
+                .filter(pokemon -> pokemon.getType().toString().equalsIgnoreCase(type))
+                .collect(Collectors.toList());
+    }
+
+    public List<Pokemon> findByName(final String name) {
+        return pokemonRepo.findAll().stream()
+                .filter(pokemon -> pokemon.getName().equalsIgnoreCase(name))
+                .collect(Collectors.toList());
     }
 }
