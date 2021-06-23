@@ -1,6 +1,8 @@
 package pl.kwidzinski.pokedexrestapi.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.kwidzinski.pokedexrestapi.model.Pokemon;
@@ -22,10 +24,16 @@ public class PokemonController {
         this.pokemonService = pokemonService;
     }
 
-    @GetMapping
+    @GetMapping(params = {"!sort", "!page", "!size"})
     public ResponseEntity<List<Pokemon>> getAll() {
         List<Pokemon> pokemonList = pokemonService.getAll();
         return ResponseEntity.ok(pokemonList);
+    }
+
+    @GetMapping("")
+    public ResponseEntity<List<Pokemon>> getAll(Pageable page) {
+        Page<Pokemon> pokemonList = pokemonService.getAll(page);
+        return ResponseEntity.ok(pokemonList.getContent());
     }
 
     @GetMapping("/{id}")
@@ -37,7 +45,7 @@ public class PokemonController {
         return ResponseEntity.notFound().build();
     }
 
-    @PostMapping
+    @PostMapping("")
     public ResponseEntity<Pokemon> add(@RequestBody @Valid Pokemon newPokemon) {
         Pokemon result = pokemonService.save(newPokemon);
         return ResponseEntity.created(URI.create("/" + result.getId())).body(result);
