@@ -1,6 +1,8 @@
 package pl.kwidzinski.pokedexrestapi.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import pl.kwidzinski.pokedexrestapi.model.Pokemon;
 import pl.kwidzinski.pokedexrestapi.repository.PokemonRepo;
@@ -22,6 +24,10 @@ public class PokemonService {
 
     public List<Pokemon> getAll() {
         return pokemonRepo.findAll();
+    }
+
+    public Page<Pokemon> getAll(final Pageable page) {
+        return pokemonRepo.findAll(page);
     }
 
     public Optional<Pokemon> findById(final Long id) {
