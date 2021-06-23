@@ -61,4 +61,22 @@ public class PokemonController {
         }
         return ResponseEntity.notFound().build();
     }
+
+    @GetMapping("/type/{type}")
+    public ResponseEntity<List<Pokemon>> getByType(@PathVariable String type) {
+        List<Pokemon>pokemonsType = pokemonService.findByType(type);
+        if (!pokemonsType.isEmpty()){
+            return ResponseEntity.ok(pokemonsType);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/name/{name}")
+    public ResponseEntity<List<Pokemon>> getByName(@PathVariable String name) {
+        List<Pokemon>pokemonsName = pokemonService.findByName(name);
+        if (!pokemonsName.isEmpty()){
+            return ResponseEntity.ok(pokemonsName);
+        }
+        return ResponseEntity.notFound().build();
+    }
 }
