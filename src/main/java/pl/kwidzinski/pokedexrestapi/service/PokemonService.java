@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import pl.kwidzinski.pokedexrestapi.exceptions.definition.EntityBadRequestException;
 import pl.kwidzinski.pokedexrestapi.exceptions.definition.EntityNotFoundException;
 import pl.kwidzinski.pokedexrestapi.model.Pokemon;
 import pl.kwidzinski.pokedexrestapi.repository.PokemonRepo;
@@ -41,7 +40,7 @@ public class PokemonService {
     }
 
     public Optional<Pokemon> findById(final Long id) {
-        return Optional.ofNullable(pokemonRepo.findById(id).orElseThrow(() -> new EntityBadRequestException(id)));
+        return Optional.ofNullable(pokemonRepo.findById(id).orElseThrow(() -> new EntityNotFoundException(Pokemon.class, "id = " + id)));
     }
 
     public Pokemon save(final Pokemon newPokemon) {
