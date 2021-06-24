@@ -63,7 +63,7 @@ public class PokemonController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Pokemon> delete(@PathVariable("id") Long idToDelete) {
-        if (pokemonService.existById(idToDelete)) {
+        if (pokemonService.findById(idToDelete).isPresent()) {
             pokemonService.delete(idToDelete);
             return ResponseEntity.ok().build();
         }
