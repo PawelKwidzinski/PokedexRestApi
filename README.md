@@ -25,10 +25,11 @@ Application with "Pokemon" as model displaying in JSON format. Production data i
 ## Technologies
 * Java 11
 * Maven
-* Spring Boot 2
+* Spring Boot 2.4.3
+* Spring Data
 * H2 (test database)
 * MySql (prod database)
-* Swagger 2
+* Swagger 2.9.2
 ## Tests
 ![alt text](https://github.com/PawelKwidzinski/PokedexRestApi/blob/master/pr_scr/serviceTest.JPG)
 ![alt text](https://github.com/PawelKwidzinski/PokedexRestApi/blob/master/pr_scr/ControllerTest.JPG)
