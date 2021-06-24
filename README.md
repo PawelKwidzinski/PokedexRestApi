@@ -1,28 +1,55 @@
 # Pokedex REST API - intership Java exercise
+#### Main points (MUST HAVE)
+* use Spring Boot to create a REST API -                  DONE
+* getAll and getById                                      DONE
+* add, delete and update pokemon                          DONE
+* use database to store data about pokemon                DONE
+* create readme file in repository, and explain your api  DONE
+#### there Aditional points
+* clean RESTful api                                       DONE?
+* create tests                                            DONE
+* search pokemons by types, name                          DONE
+* pagination                                              DONE
+* authentication                                          NOT DONE
+* create api documentation (Swagger/RestDocs)             DONE
+* error handling                                          DONE?
 ## General
-CRUD service with "Pokemon" as model of application. Data are stored in memory H2 database and displaying in JSON format.
+Application with "Pokemon" as model displaying in JSON format. Production data is stored in a MySQL database and test data in an H2 database. Unit and integration tests using Mockito and JUnit5 were performed.
 
-## Features:
+## Main Features
 * CRUD
-* Filter by types (TODO)
-* Filter by name (TODO)
-
+* Filter by types 
+* Search by name
 ## Endpoints
-### Requests:
-* GET `http://localhost:8080/pokemons` - to display all Pokemons
-* GET `http://localhost:8080/pokemons/1` - to display Pokemon by id
-* POST `http://localhost:8080/pokemons` - to save Pokemon in database
-* PUT `http://localhost:8080/pokemons/1` - to update Pokemon by id
-* DELETE `http://localhost:8080/pokemons/1` - to delete Pokemon by id
-
+![alt text](https://github.com/PawelKwidzinski/PokedexRestApi/blob/master/pr_scr/Swagger.JPG)
 ## Technologies
 * Java 11
 * Maven
 * Spring Boot 2
-* H2
+* H2 (test database)
+* MySql (prod database)
+* Swagger 2
+## Tests
+![alt text](https://github.com/PawelKwidzinski/PokedexRestApi/blob/master/pr_scr/serviceTest.JPG)
+![alt text](https://github.com/PawelKwidzinski/PokedexRestApi/blob/master/pr_scr/ControllerTest.JPG)
 ## Configuration
-application.properties file:
-* `spring.h2.console.enabledl=`
+#### application.properties file:
+* `spring.jpa.show-sql=`
+#### application-prod.properties file:
+* `spring.datasource.url=`
+* `spring.datasource.username=`
+* `spring.datasource.password=`
+* `spring.jpa.hibernate.ddl-auto=`
+* `spring.datasource.driver-class-name=`
+* `spring.jpa.hibernate.ddl-auto=`
+* `spring.jpa.show-sql=`
+#### application-test.properties file:
+* `spring.h2.console.enabled=`
 * `spring.h2.console.path=`
 * `spring.datasource.url=`
+* `spring.datasource.username=`
+* `spring.datasource.password=`
+* `spring.datasource.initialization-mode=`
+* `spring.datasource.data=`
 * `spring.jpa.hibernate.ddl-auto=`
+* `spring.jpa.database-platform=`
