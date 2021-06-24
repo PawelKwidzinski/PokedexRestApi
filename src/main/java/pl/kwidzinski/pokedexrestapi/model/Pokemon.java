@@ -3,7 +3,7 @@ package pl.kwidzinski.pokedexrestapi.model;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.*;
 
 @Entity
 public class Pokemon {
@@ -13,14 +13,23 @@ public class Pokemon {
     @GenericGenerator(name = "inc", strategy = "increment")
     private Long id;
 
-    @NotBlank(message = "Name cannot be not empty")
+    @NotNull(message = "Name cannot be not null")
+    @Size(min = 2)
     private String name;
-    @NotBlank(message = "Name cannot be not empty")
+    @NotNull(message = "Name cannot be not null")
+    @Size(min = 2)
     private String species;
     @Enumerated(EnumType.STRING)
+    @NotNull(message = "Type cannot be null")
     private Type type;
 
     public Pokemon() {
+    }
+
+    public Pokemon(final String name, final String species, final Type type) {
+        this.name = name;
+        this.species = species;
+        this.type = type;
     }
 
     public Long getId() {
