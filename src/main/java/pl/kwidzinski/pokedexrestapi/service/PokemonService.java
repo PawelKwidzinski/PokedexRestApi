@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import pl.kwidzinski.pokedexrestapi.exceptions.definition.EntityBadRequestException;
+import pl.kwidzinski.pokedexrestapi.exceptions.definition.EntityNotFoundException;
 import pl.kwidzinski.pokedexrestapi.model.Pokemon;
 import pl.kwidzinski.pokedexrestapi.repository.PokemonRepo;
 
@@ -23,19 +25,23 @@ public class PokemonService {
     }
 
     public List<Pokemon> getAll() {
-        return pokemonRepo.findAll();
+        List<Pokemon> pokemonList = pokemonRepo.findAll();
+        if (pokemonList.isEmpty()) {
+            throw new EntityNotFoundException(Pokemon.class,"<no parameters>");
+        }
+        return pokemonList;
     }
 
     public Page<Pokemon> getAll(final Pageable page) {
-        return pokemonRepo.findAll(page);
+        Page<Pokemon> pokemonList = pokemonRepo.findAll(page);
+        if (pokemonList.isEmpty()) {
+            throw new EntityNotFoundException(Pokemon.class,"<no parameters>");
+        }
+        return pokemonList;
     }
 
     public Optional<Pokemon> findById(final Long id) {
-        return pokemonRepo.findById(id);
-    }
-
-    public boolean existById(final Long id) {
-        return pokemonRepo.existsById(id);
+        return Optional.ofNullable(pokemonRepo.findById(id).orElseThrow(() -> new EntityBadRequestException(id)));
     }
 
     public Pokemon save(final Pokemon newPokemon) {
@@ -47,15 +53,23 @@ public class PokemonService {
     }
 
     public List<Pokemon> findByType(final String type) {
-        return pokemonRepo.findAll()
+        List<Pokemon> pokemonsByType = pokemonRepo.findAll()
                 .stream()
                 .filter(pokemon -> pokemon.getType().toString().equalsIgnoreCase(type))
                 .collect(Collectors.toList());
+        if (pokemonsByType.isEmpty()) {
+            throw new EntityNotFoundException(Pokemon.class, "type = " + type);
+        }
+        return pokemonsByType;
     }
 
     public List<Pokemon> findByName(final String name) {
-        return pokemonRepo.findAll().stream()
+        List<Pokemon> pokemonsByName = pokemonRepo.findAll().stream()
                 .filter(pokemon -> pokemon.getName().equalsIgnoreCase(name))
                 .collect(Collectors.toList());
+        if (pokemonsByName.isEmpty()) {
+            throw new EntityNotFoundException(Pokemon.class, "name = " + name);
+        }
+        return pokemonsByName;
     }
 }
