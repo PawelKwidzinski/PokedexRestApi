@@ -20,6 +20,8 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import pl.kwidzinski.pokedexrestapi.model.Pokemon;
 import pl.kwidzinski.pokedexrestapi.model.Type;
 
+import java.util.Objects;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
@@ -34,6 +36,15 @@ class PokemonControllerIntegrationTest {
 
     @Autowired
     ObjectMapper objectMapper;
+
+    @Test
+    public void should_return_404_when_get() throws Exception {
+        final MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.get("/pokemons/20"))
+                .andExpect(MockMvcResultMatchers.status().is(404))
+                .andReturn();
+        final String actual = Objects.requireNonNull(mvcResult.getResolvedException()).getMessage();
+        Assertions.assertEquals("Entity Pokemon not found using parameters: id = 20", actual);
+    }
 
     @Test
     void should_return_selected_pokemon() throws Exception {
